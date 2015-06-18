@@ -1,0 +1,44 @@
+;*******************************************************
+; Copyright (c) 2010-2011 ARM Ltd.  All rights reserved.
+;*******************************************************
+
+; Scatter-file for bare-metal example on Cortex-A8 EB RTSM.
+
+; This scatter-file places application code, data, stack and heap at suitable addresses in the Cortex-A8 EB RTSM memory map.
+; Using a scatter-file with ARM_LIB_STACKHEAP eliminates the need to set stack-limit or heap-base in the debugger.
+
+SDRAM 0x00000000 0x10000000
+{
+    APP_CODE +0 0xfffff
+    {
+        * (VECTORS, +FIRST)     ; Vector table and other (assembler) startup code
+        * (+RO)            ; Application RO code (.text)
+        ; * (+RO-DATA)            ; Application RO data (.constdata)
+        ; * (InRoot$$Sections)    ; All library code that must be in a root region
+    }
+
+	APP_DATA 0x00100004 
+	{
+        * (+RW, +ZI)            ; Application RW (.data) and ZI (.bss) data
+    }
+
+	ARM_LIB_HEAP  0x00140000 EMPTY  0x00040000 ; Application heap
+	{ }
+
+	ARM_LIB_STACK 0x00190000 EMPTY -0x00010000 ; Application (SVC mode) stack
+	{ }
+
+	IRQ_STACK     0x001A0000 EMPTY -0x00010000 ; IRQ mode stack
+	{ }
+	
+	SYS_STACK     0x001B0000 EMPTY -0x00010000 ; IRQ mode stack
+	{ }
+	
+	ABT_STACK     0x001C0000 EMPTY -0x00010000 ; ABT mode stack
+	{ }	  
+
+	TTB     0x00400000 EMPTY 0x4000            ; Level-1 Translation Table for MMU
+	{ }
+	
+
+}
