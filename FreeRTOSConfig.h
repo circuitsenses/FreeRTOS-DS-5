@@ -108,12 +108,15 @@
  */
 #define configMAX_API_CALL_INTERRUPT_PRIORITY	25
 
+// The values below must not matter for the Simulation. Hence are unused.
+// The tick timer is programmed with a count of 0x3e8 (1000) [configTICK_RATE_HZ]
+//#define configCPU_CLOCK_HZ						1000000UL
+//#define configPERIPHERAL_CLOCK_HZ  				( 33333000UL )
 
-#define configCPU_CLOCK_HZ						1000000UL
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION	1
 #define configUSE_TICKLESS_IDLE					0
 #define configTICK_RATE_HZ						( ( TickType_t ) 1000 )
-#define configPERIPHERAL_CLOCK_HZ  				( 33333000UL )
+
 #define configUSE_PREEMPTION					1
 #define configUSE_IDLE_HOOK						1
 #define configUSE_TICK_HOOK						1
